@@ -1,4 +1,24 @@
+type game = {
+  paragraph: string;
+  input: string;
+  errors: int;
+}
+
 let str = "this is a test"
+
+let init_game paragraph = { paragraph = paragraph; input = ""; errors = 0; }
+
+let new_input game new_ch = 
+  let actual_ch = String.get str (String.length game.paragraph) in
+  if Char.equal actual_ch new_ch then
+    { game with 
+      input = Type_practice.Utils.cat game.paragraph new_ch; 
+    }
+  else
+    { game with
+      errors = game.errors + 1;
+    }
+
 
 let words s = List.length (String.split_on_char ' ' s)
 
