@@ -12,7 +12,7 @@ let new_input game new_ch =
   let actual_ch = String.get str (String.length game.paragraph) in
   if Char.equal actual_ch new_ch then
     { game with 
-      input = Type_practice.Utils.cat game.paragraph new_ch; 
+      input = Utils.cat game.paragraph new_ch; 
     }
   else
     { game with
