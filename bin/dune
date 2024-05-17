@@ -1,4 +1,4 @@
 (executable
  (public_name type_practice)
  (name main)
- (libraries type_practice))
+ (libraries type_practice dream))
