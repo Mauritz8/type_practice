@@ -9,10 +9,10 @@ let str = "this is a test"
 let init_game paragraph = { paragraph = paragraph; input = ""; errors = 0; }
 
 let new_input game new_ch = 
-  let actual_ch = String.get str (String.length game.paragraph) in
+  let actual_ch = String.get game.paragraph (String.length game.input) in
   if Char.equal actual_ch new_ch then
     { game with 
-      input = Utils.cat game.paragraph new_ch; 
+      input = Utils.cat game.input new_ch; 
     }
   else
     { game with
