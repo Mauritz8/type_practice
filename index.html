@@ -1,0 +1,23 @@
+<html>
+
+<head>
+  <script src="https://unpkg.com/htmx.org@1.9.12"
+    integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
+    crossorigin="anonymous"></script>
+
+  <style>
+    p {
+      color: grey;
+      font-size: 25px;
+    }
+  </style>
+
+</head>
+
+<body>
+  <h1>Type Racer</h1>
+  <p id="paragraph"></p>
+  <button hx-get="/api/test" hx-target="#paragraph">Start game</button> 
+</body>
+
+</html>
