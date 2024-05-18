@@ -1,4 +1,10 @@
 (executable
  (public_name type_practice)
  (name main)
- (libraries type_practice dream))
+ (libraries type_practice dream)
+ (preprocess (pps lwt_ppx)))
+
+(rule
+  (targets main.ml)
+  (deps main.eml.ml)
+  (action (run dream_eml %{deps} --workspace %{workspace_root})))
