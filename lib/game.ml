@@ -28,6 +28,7 @@ let is_correct_input game =
     let actual_ch = String.get game.paragraph new_ch_index in
     Char.equal new_ch actual_ch
 
+let is_finished game = String.equal game.paragraph game.input
 
 let words s = List.length (String.split_on_char ' ' s)
 

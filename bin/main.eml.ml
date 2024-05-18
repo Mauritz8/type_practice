@@ -8,6 +8,9 @@ let game_form request (game : Game.game) =
       value='<%s game.input %>' onfocus='var temp_value=this.value; this.value=""; this.value=temp_value'
       autocomplete='off' autofocus>
     <input type='hidden' name='errors' value='<%i game.errors %>'>
+%     if Game.is_finished game then begin
+        <h2>You win</h2> 
+%     end;
   </form> 
 
 let () = 
