@@ -4,7 +4,7 @@ let game_form request (game : Game.game) =
   <form id='thegame'>
     <%s! Dream.csrf_tag request %>
     <input type='text' name='paragraph' value='<%s game.paragraph %>' readonly><br><br>
-    <input type='text' name='input' hx-post='/api/new_input' hx-trigger='input' hx-target='#thegame' value='<%s game.input %>' onfocus='var temp_value=this.value; this.value=""; this.value=temp_value' autofocus>
+    <input type='text' name='input' hx-post='/api/new_input' hx-trigger='input' hx-target='#thegame' value='<%s game.input %>' onfocus='var temp_value=this.value; this.value=""; this.value=temp_value' autocomplete='off' autofocus>
     <input type='hidden' name='errors' value='<%i game.errors %>'>
   </form> 
 
