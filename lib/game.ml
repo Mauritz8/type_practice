@@ -19,6 +19,12 @@ let new_input game new_ch =
       errors = game.errors + 1;
     }
 
+let is_correct_input game =
+  let new_ch_index = (String.length game.input - 1) in
+  let new_ch = String.get game.input new_ch_index in
+  let actual_ch = String.get game.paragraph new_ch_index in
+  Char.equal new_ch actual_ch
+
 
 let words s = List.length (String.split_on_char ' ' s)
 
