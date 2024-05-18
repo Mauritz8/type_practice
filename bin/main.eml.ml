@@ -27,5 +27,5 @@ let () =
           Dream.html (game_form request new_game)
       | _ -> Dream.empty `Bad_Request);
 
-    Dream.get "/**" @@ Dream.static "view/";
+    Dream.get "/" (Dream.from_filesystem "view" "index.html");
   ]
