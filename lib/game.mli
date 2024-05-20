@@ -1,4 +1,6 @@
-type game_ch = { ch: char; is_correct: bool; is_next: bool; } [@@deriving yojson]
+type game_ch = { ch : char; is_correct : bool; is_next : bool }
+[@@deriving yojson]
+
 type game = game_ch list [@@deriving yojson]
 
 val str : string
