@@ -7,12 +7,6 @@ h1 {
   font-size: 35px;
 }
 
-#game {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
 #start-btn {
   border: none;
   color: white;
@@ -32,4 +26,13 @@ h1 {
 #start-btn:hover {
   background-color: #04AA6D;
   color: white;
+}
+
+#str {
+  font-size: 0;
+  margin: 20px;
+}
+
+.ch {
+ font-size: 25px; 
 }

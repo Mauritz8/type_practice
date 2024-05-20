@@ -1,17 +1,29 @@
 open Type_practice
 
-let game_form request (game : Game.game) =
-  <form id='thegame'>
-    <%s! Dream.csrf_tag request %>
-    <input type='text' name='paragraph' value='<%s game.paragraph %>' readonly><br><br>
-    <input type='text' name='input' hx-post='/api/new_input' hx-trigger='input' hx-target='#thegame'
-      value='<%s game.input %>' onfocus='var temp_value=this.value; this.value=""; this.value=temp_value'
-      autocomplete='off' autofocus>
-    <input type='hidden' name='errors' value='<%i game.errors %>'>
-%     if Game.is_finished game then begin
-        <h2>You win</h2> 
+(*let game_form request (game : Game.game) =*)
+(*  <form id='thegame'>*)
+(*    <%s! Dream.csrf_tag request %>*)
+(*    <input type='text' name='paragraph' value='<%s game.paragraph %>' readonly><br><br>*)
+(*    <input type='text' name='input' hx-post='/api/new_input' hx-trigger='input' hx-target='#thegame'*)
+(*      value='<%s game.input %>' onfocus='var temp_value=this.value; this.value=""; this.value=temp_value'*)
+(*      autocomplete='off' autofocus>*)
+(*    <input type='hidden' name='errors' value='<%i game.errors %>'>*)
+(*%     if Game.is_finished game then begin*)
+(*        <h2>You win</h2> *)
+(*%     end;*)
+(*  </form> *)
+
+let thething (game : Game.game) =
+  <div id='str'>
+%   game |> List.iter begin fun (game_ch : Game.game_ch) ->
+%     if Char.equal game_ch.ch ' ' then begin
+        <span class='ch'>&nbsp;</span>
+%     end
+%     else begin
+        <span class='ch'><%s Utils.ch_to_str game_ch.ch %></span>
 %     end;
-  </form> 
+%   end;
+  </div>
 
 let () = 
   Dream.run 
@@ -21,16 +33,18 @@ let () =
     Dream.get "/api/test" (fun _ ->
       Dream.html "this is a test");
 
-    Dream.get "/api/new_game" (fun request ->
-      Dream.html (game_form request (Game.init_game Game.str)));
+    Dream.get "/api/new_game" (fun _ ->
+      Dream.html (thething (Game.init_game Game.str)));
 
-    Dream.post "/api/new_input" (fun request ->
-      match%lwt Dream.form request with
-      | `Ok ["errors", errors; "input", input; "paragraph", paragraph;] ->
-          let (g : Game.game) = { paragraph = paragraph; input = input; errors = int_of_string errors; } in
-          let new_game = if Game.is_correct_input g then g else {g with errors = g.errors + 1} in
-          Dream.html (game_form request new_game)
-      | _ -> Dream.empty `Bad_Request);
+    (*Dream.post "/api/new_input" (fun request ->*)
+    (*  match%lwt Dream.form request with*)
+    (*  | `Ok ["errors", errors; "input", input; "paragraph", paragraph;] ->*)
+    (*      let (g : Game.game) = { paragraph = paragraph; input = input; errors = int_of_string errors; } in*)
+    (*      let new_game = if Game.is_correct_input g then g else {g with errors = g.errors + 1} in*)
+    (*      Dream.html (game_form request new_game)*)
+    (*  | _ -> Dream.empty `Bad_Request);*)
 
     Dream.get "/" (Dream.from_filesystem "view" "index.html");
+    Dream.get "/view/**" (Dream.static "view/");
+    Dream.get "/css/**" (Dream.static "css/");
   ]

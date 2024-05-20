@@ -11,8 +11,8 @@
 <body>
   <div id='container'>
     <h1>Type Racer</h1>
-    <div id='game'></div>
-    <button id='start-btn' hx-get="/api/new_game" hx-target="#game">Start game</button>
+    <div id='str'></div>
+    <button id='start-btn' hx-get="/api/new_game" hx-target="#str" hx-swap="outerHTML">Start game</button>
   <div>
 </body>
 
