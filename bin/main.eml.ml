@@ -57,4 +57,5 @@ let () =
     Dream.get "/" (Dream.from_filesystem "view" "index.html");
     Dream.get "/view/**" (Dream.static "view/");
     Dream.get "/css/**" (Dream.static "css/");
+    Dream.get "/script/**" (Dream.static "script/");
   ]
