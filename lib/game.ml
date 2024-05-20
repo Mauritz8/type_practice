@@ -1,6 +1,9 @@
+open Ppx_yojson_conv_lib.Yojson_conv.Primitives
+
 (*type game = { paragraph : string; input : string; errors : int }*)
-type game_ch = { ch: char; is_correct: bool; is_next: bool; }
-type game = game_ch list
+type game_ch = { ch: char; is_correct: bool; is_next: bool; } [@@deriving yojson]
+type game = game_ch list [@@deriving yojson]
+
 
 let str = "this is a test"
 

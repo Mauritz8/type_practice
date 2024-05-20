@@ -14,19 +14,17 @@ open Game
 (*%     end;*)
 (*  </form> *)
 
-let ch_classes game_ch = 
-  let is_next = if game_ch.is_next then "is_next" else "" in
-  let correct = if game_ch.is_correct then "correct" else "" in
-  String.trim @@ String.concat " " ["ch"; is_next; correct]
+let ch_classes game_ch = if game_ch.is_correct then "ch correct" else "ch"
+let ch_id game_ch = if game_ch.is_next then "next" else ""
 
 let thething (game : Game.game) =
   <div id='str'>
 %   game |> List.iter begin fun (game_ch : Game.game_ch) ->
 %     if Char.equal game_ch.ch ' ' then begin
-        <span class='<%s ch_classes game_ch %>'>&nbsp;</span>
+        <span id='<%s ch_id game_ch %>' class='<%s ch_classes game_ch %>'>&nbsp;</span>
 %     end
 %     else begin
-        <span class='<%s ch_classes game_ch %>'><%s Utils.ch_to_str game_ch.ch %></span>
+        <span id='<%s ch_id game_ch %>' class='<%s ch_classes game_ch %>'><%s Utils.ch_to_str game_ch.ch %></span>
 %     end;
 %   end;
   </div>
@@ -42,13 +40,19 @@ let () =
     Dream.get "/api/new_game" (fun _ ->
       Dream.html (thething (Game.init_game Game.str)));
 
-    (*Dream.post "/api/new_input" (fun request ->*)
-    (*  match%lwt Dream.form request with*)
-    (*  | `Ok ["errors", errors; "input", input; "paragraph", paragraph;] ->*)
-    (*      let (g : Game.game) = { paragraph = paragraph; input = input; errors = int_of_string errors; } in*)
-    (*      let new_game = if Game.is_correct_input g then g else {g with errors = g.errors + 1} in*)
-    (*      Dream.html (game_form request new_game)*)
-    (*  | _ -> Dream.empty `Bad_Request);*)
+    Dream.post "/api/new_input" (fun request ->
+      let%lwt body = Dream.body request in
+
+      let game_ch =
+        body
+        |> Yojson.Safe.from_string
+        |> game_ch_of_yojson
+      in
+
+      yojson_of_game_ch game_ch
+      |> Yojson.Safe.to_string
+      |> Dream.json);
+
 
     Dream.get "/" (Dream.from_filesystem "view" "index.html");
     Dream.get "/view/**" (Dream.static "view/");

@@ -3,7 +3,7 @@
  (name main)
  (libraries type_practice dream)
  (preprocess
-  (pps lwt_ppx)))
+  (pps lwt_ppx ppx_yojson_conv)))
 
 (rule
  (targets main.ml)

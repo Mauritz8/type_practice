@@ -1,2 +1,4 @@
 (library
- (name type_practice))
+ (name type_practice)
+ (preprocess
+  (pps ppx_yojson_conv)))
