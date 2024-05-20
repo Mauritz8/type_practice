@@ -1,3 +1,5 @@
+open Ppx_yojson_conv_lib.Yojson_conv.Primitives
+
 open Type_practice
 open Game
 
@@ -13,6 +15,8 @@ open Game
 (*        <h2>You win</h2> *)
 (*%     end;*)
 (*  </form> *)
+
+type new_ch_post_data = { g: game_ch list; ch: char } [@@deriving yojson]
 
 let ch_classes game_ch = if game_ch.is_correct then "ch correct" else "ch"
 let ch_id game_ch = if game_ch.is_next then "next" else ""
@@ -42,16 +46,13 @@ let () =
 
     Dream.post "/api/new_input" (fun request ->
       let%lwt body = Dream.body request in
-
-      let game_ch =
+      let data =
         body
         |> Yojson.Safe.from_string
-        |> game_ch_of_yojson
+        |> new_ch_post_data_of_yojson
       in
-
-      yojson_of_game_ch game_ch
-      |> Yojson.Safe.to_string
-      |> Dream.json);
+      let new_game = new_input data.g data.ch in
+      Dream.html @@ thething new_game);
 
 
     Dream.get "/" (Dream.from_filesystem "view" "index.html");

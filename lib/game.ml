@@ -15,12 +15,16 @@ let init_game str =
     | _ -> aux (i - 1) ({ ch = ch; is_correct = false; is_next = false; } :: lst)
   in aux (String.length str - 1) []
 
-(*let new_input game new_ch =*)
-(*  let actual_ch = String.get game.paragraph (String.length game.input) in*)
-(*  if Char.equal actual_ch new_ch then*)
-(*    { game with input = Utils.cat game.input new_ch }*)
-(*  else { game with errors = game.errors + 1 }*)
-(**)
+
+let rec new_input game ch = 
+  let new_x x = { ch = x.ch; is_correct = Char.equal x.ch ch; is_next = false; } in
+  match game with
+  | [] -> []
+  | [x] -> [new_x x]
+  | x :: y :: ys -> 
+      let new_y = { ch = y.ch; is_correct = y.is_correct; is_next = true; } in
+      if x.is_next then new_x x :: new_y :: ys else x :: new_input (y :: ys) ch
+
 (*let is_correct_input game =*)
 (*  let new_ch_index = String.length game.input - 1 in*)
 (*  if new_ch_index >= String.length game.paragraph then false*)
