@@ -1,4 +1,5 @@
 open Type_practice
+open Game
 
 (*let game_form request (game : Game.game) =*)
 (*  <form id='thegame'>*)
@@ -13,14 +14,19 @@ open Type_practice
 (*%     end;*)
 (*  </form> *)
 
+let ch_classes game_ch = 
+  let is_next = if game_ch.is_next then "is_next" else "" in
+  let correct = if game_ch.is_correct then "correct" else "" in
+  String.trim @@ String.concat " " ["ch"; is_next; correct]
+
 let thething (game : Game.game) =
   <div id='str'>
 %   game |> List.iter begin fun (game_ch : Game.game_ch) ->
 %     if Char.equal game_ch.ch ' ' then begin
-        <span class='ch'>&nbsp;</span>
+        <span class='<%s ch_classes game_ch %>'>&nbsp;</span>
 %     end
 %     else begin
-        <span class='ch'><%s Utils.ch_to_str game_ch.ch %></span>
+        <span class='<%s ch_classes game_ch %>'><%s Utils.ch_to_str game_ch.ch %></span>
 %     end;
 %   end;
   </div>
