@@ -5,19 +5,15 @@
     integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
     crossorigin="anonymous"></script>
 
-  <style>
-    p {
-      color: grey;
-      font-size: 25px;
-    }
-  </style>
-
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-  <h1>Type Racer</h1>
-  <div id='game'></div>
-  <button hx-get="/api/new_game" hx-target="#game">Start game</button>
+  <div id='container'>
+    <h1>Type Racer</h1>
+    <div id='game'></div>
+    <button id='start-btn' hx-get="/api/new_game" hx-target="#game">Start game</button>
+  <div>
 </body>
 
 </html>
