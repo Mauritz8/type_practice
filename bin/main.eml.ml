@@ -3,19 +3,6 @@ open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 open Type_practice
 open Game
 
-(*let game_form request (game : Game.game) =*)
-(*  <form id='thegame'>*)
-(*    <%s! Dream.csrf_tag request %>*)
-(*    <input type='text' name='paragraph' value='<%s game.paragraph %>' readonly><br><br>*)
-(*    <input type='text' name='input' hx-post='/api/new_input' hx-trigger='input' hx-target='#thegame'*)
-(*      value='<%s game.input %>' onfocus='var temp_value=this.value; this.value=""; this.value=temp_value'*)
-(*      autocomplete='off' autofocus>*)
-(*    <input type='hidden' name='errors' value='<%i game.errors %>'>*)
-(*%     if Game.is_finished game then begin*)
-(*        <h2>You win</h2> *)
-(*%     end;*)
-(*  </form> *)
-
 type new_ch_post_data = { g: game_ch list; ch: char } [@@deriving yojson]
 
 let ch_classes game_ch = if game_ch.is_correct then "ch correct" else "ch"
