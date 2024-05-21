@@ -2,19 +2,19 @@ open Base
 open Type_practice.Game_engine
 open Type_practice.Char_info
 
-let%test_unit "init_text_word" =
-  let expect = [
+let%test_unit "init_typing_data_word" =
+  let expect = { text = [
     { ch = 's'; is_correct = false; is_next = true; };
     { ch = 't'; is_correct = false; is_next = false; };
     { ch = 'r'; is_correct = false; is_next = false; };
-  ] in
-  let actual = init_text "str" in
-  let is_eq = text_equal actual expect in
+  ]; errors = 0 } in
+  let actual = init_typing_data "str" in
+  let is_eq = typing_data_equal actual expect in
   if not is_eq then print_text_diff expect actual;
   assert is_eq
 
-let%test_unit "init_text_sentence" =
-  let expect = [
+let%test_unit "init_typing_data_sentence" =
+  let expect = { text = [
     { ch = 't'; is_correct = false; is_next = true; };
     { ch = 'h'; is_correct = false; is_next = false; };
     { ch = 'i'; is_correct = false; is_next = false; };
@@ -29,40 +29,40 @@ let%test_unit "init_text_sentence" =
     { ch = 'e'; is_correct = false; is_next = false; };
     { ch = 's'; is_correct = false; is_next = false; };
     { ch = 't'; is_correct = false; is_next = false; };
-  ] in
-  let actual = init_text "this is a test" in
-  let is_eq = text_equal expect actual in
+  ]; errors = 0 } in
+  let actual = init_typing_data "this is a test" in
+  let is_eq = typing_data_equal expect actual in
   if not is_eq then print_text_diff expect actual;
   assert is_eq
 
 let%test_unit "handle_new_ch_correct" = 
-  let game = [
+  let typing_data = { text = [
     { ch = 's'; is_correct = false; is_next = true; };
     { ch = 't'; is_correct = false; is_next = false; };
     { ch = 'r'; is_correct = false; is_next = false; };
-  ] in
-  let expect = [
+  ]; errors = 0; } in
+  let expect = { text = [
     { ch = 's'; is_correct = true; is_next = false; };
     { ch = 't'; is_correct = false; is_next = true; };
     { ch = 'r'; is_correct = false; is_next = false; };
-  ] in
-  let actual = handle_new_ch game 's' in
-  let is_eq = text_equal expect actual in
+  ]; errors = 0 } in
+  let actual = handle_new_ch typing_data 's' in
+  let is_eq = typing_data_equal expect actual in
   if not is_eq then print_text_diff expect actual;
   assert is_eq
 
 let%test_unit "handle_new_ch_wrong" = 
-  let game = [
+  let typing_data = { text = [
     { ch = 's'; is_correct = false; is_next = true; };
     { ch = 't'; is_correct = false; is_next = false; };
     { ch = 'r'; is_correct = false; is_next = false; };
-  ] in
-  let expect = [
+  ]; errors = 0 } in
+  let expect = { text = [
     { ch = 's'; is_correct = false; is_next = false; };
     { ch = 't'; is_correct = false; is_next = true; };
     { ch = 'r'; is_correct = false; is_next = false; };
-  ] in
-  let actual = handle_new_ch game 'h' in
-  let is_eq = text_equal expect actual in
+  ]; errors = 1 } in
+  let actual = handle_new_ch typing_data 'h' in
+  let is_eq = typing_data_equal expect actual in
   if not is_eq then print_text_diff expect actual;
   assert is_eq

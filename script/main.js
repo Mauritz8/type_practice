@@ -14,7 +14,7 @@ window.addEventListener("keydown", e => {
   fetch("/api/new_input", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text: text, ch: e.key }),
+    body: JSON.stringify({ typing_data: { text: text, errors: 0}, ch: e.key }),
   }).then(res => res.text())
     .then(text => {
       container.outerHTML = text;

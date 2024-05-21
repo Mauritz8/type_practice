@@ -1,21 +1,28 @@
+open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 open Char_info
+
+type typing_data = { text: char_info list; errors: int; } [@@deriving yojson]
 
 let str = "this is a test"
 
-let init_text str =
+let init_typing_data str =
   let first = { ch = String.get str 0; is_correct = false; is_next = true } in
   let elem i = { ch = String.get str i; is_correct = false; is_next = false } in
   let range = List.init (String.length str - 1) (fun x -> x + 1) in
-  first :: List.map elem range
+  { text = first :: List.map elem range; errors = 0; }
 
-let rec handle_new_ch text ch =
-  let new_x x = { x with is_correct = Char.equal x.ch ch; is_next = false } in
-  match text with
-  | [] -> []
-  | [ x ] -> [ new_x x ]
-  | x :: y :: ys ->
-      let new_y = { y with is_next = true } in
-      if x.is_next then new_x x :: new_y :: ys else x :: handle_new_ch (y :: ys) ch
+let handle_new_ch typing_data ch =
+  let ci = List.find (fun ci -> ci.is_next) typing_data.text in
+  let new_ci = { ci with is_correct = ci.ch = ch; is_next = false } in
+  let errors = if ci.ch = ch then typing_data.errors else typing_data.errors + 1 in
+  let rec new_text = function
+    | [] -> []
+    | [ _ ] -> [ new_ci ]
+    | x :: y :: ys ->
+        let new_y = { y with is_next = true } in
+        if x.is_next then new_ci :: new_y :: ys else x :: new_text (y :: ys)
+  in { text = (new_text typing_data.text); errors = errors }
+
 
 let text_done txt = List.length (List.filter (fun ci -> ci.is_correct = false) txt) = 0
 
@@ -26,12 +33,12 @@ let wpm str sec =
   let min = sec /. 60.0 in
   float_of_int n_words /. min
 
-let text_equal t1 t2 = List.equal equal_char_info t1 t2
+let typing_data_equal x y = List.equal equal_char_info x.text y.text && x.errors = y.errors
 
-let text_format t = 
-  let chs = List.map format_char_info t in
+let typing_data_format x = 
+  let chs = List.map format_char_info x.text in
   let chs_str = String.concat ", \n" chs in
-  Printf.sprintf "[\n%s\n]\n" chs_str
+  Printf.sprintf "[\n%s\n]\n, errors = %d" chs_str x.errors
 
 let print_text_diff expected actual = Printf.printf "Test failed!\nExpected %s\nActual %s"
-    (text_format expected) (text_format actual)
+    (typing_data_format expected) (typing_data_format actual)
