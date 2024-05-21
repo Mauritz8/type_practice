@@ -21,6 +21,12 @@ let text (chs : char_info list) =
 %   end;
   </div>
 
+let report =
+  <div id='report'>
+    <p>Excellent!</p>
+    <p>Your speed was 96 wpm with 98% accuracy</p>
+  </div>
+
 let () = 
   Dream.run 
   @@ Dream.logger
@@ -37,7 +43,8 @@ let () =
         |> input_data_of_yojson
       in
       let new_text = handle_new_ch data.text data.ch in
-      Dream.html @@ text new_text);
+      let html = if text_done new_text then report else text new_text in
+      Dream.html html);
 
 
     Dream.get "/" (Dream.from_filesystem "view" "index.html");

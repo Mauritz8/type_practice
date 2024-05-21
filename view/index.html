@@ -10,11 +10,9 @@
 </head>
 
 <body>
-  <div id='container'>
-    <h1>Type Racer</h1>
-    <div id='str'></div>
-    <button id='start-btn' hx-get="/api/new_text" hx-target="#str" hx-swap="outerHTML">Start game</button>
-  <div>
+  <h1>Type Racer</h1>
+  <div id='container'></div>
+  <button id='start-btn' hx-get="/api/new_text" hx-target="#container">New game</button>
 </body>
 
 </html>

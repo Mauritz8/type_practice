@@ -1,4 +1,4 @@
-#container {
+body {
   text-align: center;
 }
 
@@ -34,7 +34,7 @@ h1 {
 }
 
 .ch {
- font-size: 25px; 
+  font-size: 25px; 
 }
 
 #next {

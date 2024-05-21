@@ -17,6 +17,8 @@ let rec handle_new_ch text ch =
       let new_y = { y with is_next = true } in
       if x.is_next then new_x x :: new_y :: ys else x :: handle_new_ch (y :: ys) ch
 
+let text_done txt = List.length (List.filter (fun ci -> ci.is_correct = false) txt) = 0
+
 let get_n_words s = List.length @@ String.split_on_char ' ' s
 
 let wpm str sec =
