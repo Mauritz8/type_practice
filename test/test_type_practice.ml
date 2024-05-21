@@ -1,5 +1,6 @@
 open Base
 open Type_practice.Game_engine
+open Type_practice.Char_info
 
 let%test_unit "init_text_word" =
   let expect = [

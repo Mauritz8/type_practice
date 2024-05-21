@@ -2,6 +2,7 @@ open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 open Type_practice
 open Game_engine
+open Char_info
 
 type new_ch_post_data = { text: char_info list; ch: char } [@@deriving yojson]
 

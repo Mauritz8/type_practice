@@ -1,7 +1,4 @@
-open Ppx_yojson_conv_lib.Yojson_conv.Primitives
-
-type char_info = { ch : char; is_correct : bool; is_next : bool }
-[@@deriving yojson]
+open Char_info
 
 let str = "this is a test"
 
@@ -27,16 +24,7 @@ let wpm str sec =
   let min = sec /. 60.0 in
   float_of_int n_words /. min
 
-
-let equal_char_info ci1 ci2 =
-  Char.equal ci1.ch ci2.ch &&
-  Bool.equal ci1.is_correct ci2.is_correct &&
-  Bool.equal ci1.is_next ci2.is_next
-
 let text_equal t1 t2 = List.equal equal_char_info t1 t2
-
-let format_char_info ch = Printf.sprintf "{ ch = %c; is_correct = %b; is_next = %b }"
-    ch.ch ch.is_correct ch.is_next
 
 let text_format t = 
   let chs = List.map format_char_info t in
