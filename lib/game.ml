@@ -8,13 +8,10 @@ type game = game_ch list [@@deriving yojson]
 let str = "this is a test"
 
 let init_game str =
-  let rec aux i (lst : game_ch list) =
-    let ch = String.get str i in
-    match i with
-    | 0 -> { ch; is_correct = false; is_next = true } :: lst
-    | _ -> aux (i - 1) ({ ch; is_correct = false; is_next = false } :: lst)
-  in
-  aux (String.length str - 1) []
+  let first = { ch = String.get str 0; is_correct = false; is_next = true } in
+  let elem i = { ch = String.get str i; is_correct = false; is_next = false } in
+  let range = List.init (String.length str - 1) (fun x -> x + 1) in
+  first :: List.map elem range
 
 let rec new_input game ch =
   let new_x x =
