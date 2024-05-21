@@ -1,5 +1,5 @@
 open Base
-open Type_practice.Game
+open Type_practice.Game_engine
 
 let%test_unit "init_text_word" =
   let expect = [
@@ -34,7 +34,7 @@ let%test_unit "init_text_sentence" =
   if not is_eq then print_text_diff expect actual;
   assert is_eq
 
-let%test_unit "new_input_correct" = 
+let%test_unit "handle_new_ch_correct" = 
   let game = [
     { ch = 's'; is_correct = false; is_next = true; };
     { ch = 't'; is_correct = false; is_next = false; };
@@ -45,12 +45,12 @@ let%test_unit "new_input_correct" =
     { ch = 't'; is_correct = false; is_next = true; };
     { ch = 'r'; is_correct = false; is_next = false; };
   ] in
-  let actual = new_input game 's' in
+  let actual = handle_new_ch game 's' in
   let is_eq = text_equal expect actual in
   if not is_eq then print_text_diff expect actual;
   assert is_eq
 
-let%test_unit "new_input_wrong" = 
+let%test_unit "handle_new_ch_wrong" = 
   let game = [
     { ch = 's'; is_correct = false; is_next = true; };
     { ch = 't'; is_correct = false; is_next = false; };
@@ -61,7 +61,7 @@ let%test_unit "new_input_wrong" =
     { ch = 't'; is_correct = false; is_next = true; };
     { ch = 'r'; is_correct = false; is_next = false; };
   ] in
-  let actual = new_input game 'h' in
+  let actual = handle_new_ch game 'h' in
   let is_eq = text_equal expect actual in
   if not is_eq then print_text_diff expect actual;
   assert is_eq

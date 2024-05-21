@@ -1,7 +1,7 @@
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 open Type_practice
-open Game
+open Game_engine
 
 type new_ch_post_data = { text: char_info list; ch: char } [@@deriving yojson]
 
@@ -25,8 +25,8 @@ let () =
   @@ Dream.logger
   @@ Dream.memory_sessions
   @@ Dream.router [
-    Dream.get "/api/new_game" (fun _ ->
-      Dream.html (text (Game.init_text Game.str)));
+    Dream.get "/api/new_text" (fun _ ->
+      Dream.html (text (init_text str)));
 
     Dream.post "/api/new_input" (fun request ->
       let%lwt body = Dream.body request in
@@ -35,8 +35,8 @@ let () =
         |> Yojson.Safe.from_string
         |> new_ch_post_data_of_yojson
       in
-      let new_game = new_input data.text data.ch in
-      Dream.html @@ text new_game);
+      let new_text = handle_new_ch data.text data.ch in
+      Dream.html @@ text new_text);
 
 
     Dream.get "/" (Dream.from_filesystem "view" "index.html");

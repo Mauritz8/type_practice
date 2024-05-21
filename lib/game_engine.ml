@@ -11,14 +11,14 @@ let init_text str =
   let range = List.init (String.length str - 1) (fun x -> x + 1) in
   first :: List.map elem range
 
-let rec new_input game ch =
+let rec handle_new_ch text ch =
   let new_x x = { x with is_correct = Char.equal x.ch ch; is_next = false } in
-  match game with
+  match text with
   | [] -> []
   | [ x ] -> [ new_x x ]
   | x :: y :: ys ->
       let new_y = { y with is_next = true } in
-      if x.is_next then new_x x :: new_y :: ys else x :: new_input (y :: ys) ch
+      if x.is_next then new_x x :: new_y :: ys else x :: handle_new_ch (y :: ys) ch
 
 let get_n_words s = List.length @@ String.split_on_char ' ' s
 
