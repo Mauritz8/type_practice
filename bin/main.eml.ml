@@ -22,10 +22,10 @@ let text (tp : typing_data) =
 %   end;
   </div>
 
-let report =
+let typing_report report =
   <div id='report'>
     <p>Excellent!</p>
-    <p>Your speed was 96 wpm with 98% accuracy</p>
+    <p>You typed <%d report.words %> words with <%d report.accuracy_percent %>% accuracy</p>
   </div>
 
 let () = 
@@ -44,7 +44,8 @@ let () =
         |> input_data_of_yojson
       in
       let new_typing_data = handle_new_ch data.typing_data data.ch in
-      let html = if text_done new_typing_data.text then report else text new_typing_data in
+      let html = if text_done new_typing_data.text then 
+        typing_report (report new_typing_data) else text new_typing_data in
       Dream.html html);
 
 
