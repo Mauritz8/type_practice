@@ -1,4 +1,5 @@
 window.addEventListener("keydown", e => {
+  if (e.key.length > 1) return;
   const container = document.getElementById("str");
   const elems = Array.from(container.children);
   const game = elems.map(elem => {
