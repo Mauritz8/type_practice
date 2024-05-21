@@ -5,7 +5,7 @@ window.addEventListener("keydown", e => {
     const ch = elem.innerHTML === "&nbsp;" ? " " : elem.innerHTML;
     const is_next = elem.id === "next";
     const is_correct = elem.classList.contains("correct");
-    return { "ch" : ch, "is_next" : is_next, "is_correct" : is_correct };
+    return { "ch" : ch, "is_correct" : is_correct, "is_next" : is_next };
   });
   
   fetch("/api/new_input", {

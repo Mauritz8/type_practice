@@ -8,4 +8,5 @@ val init_game : string -> game
 val new_input : game -> char -> game
 val wpm : string -> float -> float
 val equal_game : game -> game -> bool
+val format_game : game -> string
 val print_diff : game -> game -> unit
