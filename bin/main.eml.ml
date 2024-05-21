@@ -4,7 +4,7 @@ open Type_practice
 open Game_engine
 open Char_info
 
-type new_ch_post_data = { text: char_info list; ch: char } [@@deriving yojson]
+type input_data = { text: char_info list; ch: char } [@@deriving yojson]
 
 let ch_classes ci = if ci.is_correct then "ch correct" else "ch"
 let ch_id ci = if ci.is_next then "next" else ""
@@ -34,7 +34,7 @@ let () =
       let data =
         body
         |> Yojson.Safe.from_string
-        |> new_ch_post_data_of_yojson
+        |> input_data_of_yojson
       in
       let new_text = handle_new_ch data.text data.ch in
       Dream.html @@ text new_text);
