@@ -11,6 +11,7 @@ let ch_id ci = if ci.is_next then "next" else ""
 
 let text (tp : typing_data) =
   <div id='str'>
+    <input id='errors' type='hidden' value='<%d tp.errors %>'>
 %   tp.text |> List.iter begin fun (ci : char_info) ->
 %     if Char.equal ci.ch ' ' then begin
         <span id='<%s ch_id ci %>' class='<%s ch_classes ci %>'>&nbsp;</span>
