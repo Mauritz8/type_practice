@@ -26,7 +26,7 @@ let () =
   @@ Dream.memory_sessions
   @@ Dream.router [
     Dream.get "/api/new_game" (fun _ ->
-      Dream.html (text (Game.init_game Game.str)));
+      Dream.html (text (Game.init_text Game.str)));
 
     Dream.post "/api/new_input" (fun request ->
       let%lwt body = Dream.body request in
