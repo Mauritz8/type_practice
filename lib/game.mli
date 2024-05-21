@@ -5,5 +5,7 @@ type game = game_ch list [@@deriving yojson]
 
 val str : string
 val init_game : string -> game
-val new_input : game_ch list -> char -> game_ch list
+val new_input : game -> char -> game
 val wpm : string -> float -> float
+val equal_game : game -> game -> bool
+val print_diff : game -> game -> unit

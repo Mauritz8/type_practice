@@ -1,2 +1,5 @@
-(test
- (name test_type_practice))
+(library
+ (name test_type_practice)
+ (libraries type_practice)
+ (inline_tests)
+ (preprocess (pps ppx_inline_test ppx_assert)))

@@ -28,3 +28,22 @@ let wpm str sec =
   let n_words = get_n_words str in
   let min = sec /. 60.0 in
   float_of_int n_words /. min
+
+
+let equal_ch ch1 ch2 =
+  Char.equal ch1.ch ch2.ch &&
+  Bool.equal ch1.is_correct ch2.is_correct &&
+  Bool.equal ch1.is_next ch2.is_next
+
+let equal_game g1 g2 = List.equal equal_ch g1 g2
+
+let format_ch ch = Printf.sprintf "{ ch = %c; is_correct = %b; is_next = %b }"
+    ch.ch ch.is_correct ch.is_next
+
+let format_game g = 
+  let chs = List.map format_ch g in
+  let chs_str = String.concat ", \n" chs in
+  Printf.sprintf "[\n%s\n]\n" chs_str
+
+let print_diff expected actual = Printf.printf "Test failed!\nExpected %s\nActual %s"
+    (format_game expected) (format_game actual)
