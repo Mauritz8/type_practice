@@ -44,3 +44,7 @@ h1 {
 .correct {
   color: green;
 }
+
+#report {
+  font-size: 25px;
+}
