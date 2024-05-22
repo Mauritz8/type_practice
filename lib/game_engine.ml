@@ -21,12 +21,12 @@ let rec handle_backspace = function
       else x :: handle_backspace (y :: ys)
 
 let handle_ch txt ch =
-  let new_x x = { x with is_correct = x.ch = ch; is_next = false } in
   let rec aux = function
     | [] -> []
-    | [ x ] -> if x.is_next then [ new_x x ] else [ x ] 
+    | [ x ] -> [ { x with is_correct = x.ch = ch; is_next = if x.ch = ch then false else true} ] 
     | x :: y :: ys ->
-        if x.is_next then new_x x :: { y with is_next = true } :: ys
+        if x.is_next then
+          { x with is_correct = x.ch = ch; is_next = false } :: { y with is_next = true } :: ys
         else x :: aux (y :: ys)
   in aux txt
 
