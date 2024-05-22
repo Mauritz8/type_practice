@@ -6,8 +6,10 @@ window.addEventListener("keydown", e => {
   const text = elems.map(elem => {
     const ch = elem.innerHTML === "&nbsp;" ? " " : elem.innerHTML;
     const is_next = elem.id === "next";
-    const is_correct = elem.classList.contains("correct");
-    return { "ch" : ch, "is_correct" : is_correct, "is_next" : is_next };
+    const state = elem.classList.contains("correct") ? ["Correct"]
+      : elem.classList.contains("wrong") ? ["Wrong"]
+      : ["Default"];
+    return { "ch" : ch, "state" : state, "is_next" : is_next };
   });
   const errors = parseInt(container.querySelector("#errors").value);
 

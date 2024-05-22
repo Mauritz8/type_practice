@@ -11,7 +11,11 @@ type input_data = { typing_data: typing_data; key: string } [@@deriving yojson]
 let char_info_span (ci : char_info) = 
     span 
       [ if ci.is_next then id "next" else id "";
-        if ci.is_correct then class_ "ch correct" else class_ "ch" ]
+        match ci.state with
+        | Default -> class_ "ch";
+        | Correct -> class_ "ch correct";
+        | Wrong -> class_ "ch wrong";
+      ]
       [txt "%s" (Utils.ch_to_str ci.ch)]
 
 let text (tp : typing_data) =

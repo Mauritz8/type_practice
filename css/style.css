@@ -45,6 +45,10 @@ h1 {
   color: green;
 }
 
+.wrong {
+  color: red;
+}
+
 #report {
   font-size: 25px;
 }

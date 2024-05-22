@@ -7,9 +7,9 @@ let%test_unit "init_typing_data_word" =
     {
       text =
         [
-          { ch = 's'; is_correct = false; is_next = true };
-          { ch = 't'; is_correct = false; is_next = false };
-          { ch = 'r'; is_correct = false; is_next = false };
+          { ch = 's'; state = Default; is_next = true };
+          { ch = 't'; state = Default; is_next = false };
+          { ch = 'r'; state = Default; is_next = false };
         ];
       errors = 0;
     }
@@ -24,20 +24,20 @@ let%test_unit "init_typing_data_sentence" =
     {
       text =
         [
-          { ch = 't'; is_correct = false; is_next = true };
-          { ch = 'h'; is_correct = false; is_next = false };
-          { ch = 'i'; is_correct = false; is_next = false };
-          { ch = 's'; is_correct = false; is_next = false };
-          { ch = ' '; is_correct = false; is_next = false };
-          { ch = 'i'; is_correct = false; is_next = false };
-          { ch = 's'; is_correct = false; is_next = false };
-          { ch = ' '; is_correct = false; is_next = false };
-          { ch = 'a'; is_correct = false; is_next = false };
-          { ch = ' '; is_correct = false; is_next = false };
-          { ch = 't'; is_correct = false; is_next = false };
-          { ch = 'e'; is_correct = false; is_next = false };
-          { ch = 's'; is_correct = false; is_next = false };
-          { ch = 't'; is_correct = false; is_next = false };
+          { ch = 't'; state = Default; is_next = true };
+          { ch = 'h'; state = Default; is_next = false };
+          { ch = 'i'; state = Default; is_next = false };
+          { ch = 's'; state = Default; is_next = false };
+          { ch = ' '; state = Default; is_next = false };
+          { ch = 'i'; state = Default; is_next = false };
+          { ch = 's'; state = Default; is_next = false };
+          { ch = ' '; state = Default; is_next = false };
+          { ch = 'a'; state = Default; is_next = false };
+          { ch = ' '; state = Default; is_next = false };
+          { ch = 't'; state = Default; is_next = false };
+          { ch = 'e'; state = Default; is_next = false };
+          { ch = 's'; state = Default; is_next = false };
+          { ch = 't'; state = Default; is_next = false };
         ];
       errors = 0;
     }
@@ -52,9 +52,9 @@ let%test_unit "handle_new_ch_correct" =
     {
       text =
         [
-          { ch = 's'; is_correct = false; is_next = true };
-          { ch = 't'; is_correct = false; is_next = false };
-          { ch = 'r'; is_correct = false; is_next = false };
+          { ch = 's'; state = Default; is_next = true };
+          { ch = 't'; state = Default; is_next = false };
+          { ch = 'r'; state = Default; is_next = false };
         ];
       errors = 0;
     }
@@ -63,9 +63,9 @@ let%test_unit "handle_new_ch_correct" =
     {
       text =
         [
-          { ch = 's'; is_correct = true; is_next = false };
-          { ch = 't'; is_correct = false; is_next = true };
-          { ch = 'r'; is_correct = false; is_next = false };
+          { ch = 's'; state = Correct; is_next = false };
+          { ch = 't'; state = Default; is_next = true };
+          { ch = 'r'; state = Default; is_next = false };
         ];
       errors = 0;
     }
@@ -80,9 +80,9 @@ let%test_unit "handle_new_ch_wrong" =
     {
       text =
         [
-          { ch = 's'; is_correct = false; is_next = true };
-          { ch = 't'; is_correct = false; is_next = false };
-          { ch = 'r'; is_correct = false; is_next = false };
+          { ch = 's'; state = Default; is_next = true };
+          { ch = 't'; state = Default; is_next = false };
+          { ch = 'r'; state = Default; is_next = false };
         ];
       errors = 0;
     }
@@ -91,9 +91,9 @@ let%test_unit "handle_new_ch_wrong" =
     {
       text =
         [
-          { ch = 's'; is_correct = false; is_next = false };
-          { ch = 't'; is_correct = false; is_next = true };
-          { ch = 'r'; is_correct = false; is_next = false };
+          { ch = 's'; state = Wrong; is_next = false };
+          { ch = 't'; state = Default; is_next = true };
+          { ch = 'r'; state = Default; is_next = false };
         ];
       errors = 1;
     }

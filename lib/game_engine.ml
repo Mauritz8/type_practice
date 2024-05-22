@@ -7,8 +7,8 @@ type report = { words : int; errors : int; accuracy_percent : int }
 let str = "this is a test"
 
 let init_typing_data str =
-  let first = { ch = String.get str 0; is_correct = false; is_next = true } in
-  let elem i = { ch = String.get str i; is_correct = false; is_next = false } in
+  let first = { ch = String.get str 0; state = Default; is_next = true } in
+  let elem i = { ch = String.get str i; state = Default; is_next = false } in
   let range = List.init (String.length str - 1) (fun x -> x + 1) in
   { text = first :: List.map elem range; errors = 0 }
 
@@ -17,16 +17,22 @@ let rec handle_backspace = function
   | [ x ] -> [ x ]
   | x :: y :: ys -> 
       if y.is_next then 
-        { x with is_correct = false; is_next = true} :: { y with is_next = false} :: ys 
+        { x with state = Default; is_next = true} ::
+        { y with state = Default; is_next = false} :: ys 
       else x :: handle_backspace (y :: ys)
 
 let handle_ch txt ch =
   let rec aux = function
     | [] -> []
-    | [ x ] -> [ { x with is_correct = x.ch = ch; is_next = if x.ch = ch then false else true} ] 
+    | [ x ] -> [{ x with 
+          state = if x.ch = ch then Correct else Wrong;
+          is_next = if x.ch = ch then false else true
+        }] 
     | x :: y :: ys ->
         if x.is_next then
-          { x with is_correct = x.ch = ch; is_next = false } :: { y with is_next = true } :: ys
+          { x with 
+            state = if x.ch = ch then Correct else Wrong;
+            is_next = false } :: { y with is_next = true } :: ys
         else x :: aux (y :: ys)
   in aux txt
 
@@ -44,7 +50,7 @@ let handle_new_key typing_data key =
       { text = (handle_ch typing_data.text ch); errors }
 
 let text_done txt =
-  List.length (List.filter (fun ci -> ci.is_correct = false) txt) = 0
+  List.length (List.filter (fun ci -> ci.state = Wrong || ci.state = Default) txt) = 0
 
 let n_words txt = List.length (List.filter (fun ci -> ci.ch = ' ') txt) + 1
 
