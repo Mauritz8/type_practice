@@ -1,5 +1,4 @@
 window.addEventListener("keydown", e => {
-  if (e.key.length > 1) return;
   if (e.key == ' ') e.preventDefault();
 
   const container = document.getElementById("str");
@@ -15,7 +14,7 @@ window.addEventListener("keydown", e => {
   fetch("/api/new_input", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ typing_data: { text: text, errors: errors}, ch: e.key }),
+    body: JSON.stringify({ typing_data: { text: text, errors: errors}, key: e.key }),
   }).then(res => res.text())
     .then(text => {
       container.outerHTML = text;

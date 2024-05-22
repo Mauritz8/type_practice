@@ -12,20 +12,36 @@ let init_typing_data str =
   let range = List.init (String.length str - 1) (fun x -> x + 1) in
   { text = first :: List.map elem range; errors = 0 }
 
-let handle_new_ch typing_data ch =
-  let ci = List.find (fun ci -> ci.is_next) typing_data.text in
-  let new_ci = { ci with is_correct = ci.ch = ch; is_next = false } in
-  let errors =
-    if ci.ch = ch then typing_data.errors else typing_data.errors + 1
-  in
-  let rec new_text = function
+let rec handle_backspace = function
+  | [] -> []
+  | [ x ] -> [ x ]
+  | x :: y :: ys -> 
+      if y.is_next then 
+        { x with is_correct = false; is_next = true} :: { y with is_next = false} :: ys 
+      else x :: handle_backspace (y :: ys)
+
+let handle_ch txt ch =
+  let new_x x = { x with is_correct = x.ch = ch; is_next = false } in
+  let rec aux = function
     | [] -> []
-    | [ _ ] -> [ new_ci ]
+    | [ x ] -> if x.is_next then [ new_x x ] else [ x ] 
     | x :: y :: ys ->
-        let new_y = { y with is_next = true } in
-        if x.is_next then new_ci :: new_y :: ys else x :: new_text (y :: ys)
-  in
-  { text = new_text typing_data.text; errors }
+        if x.is_next then new_x x :: { y with is_next = true } :: ys
+        else x :: aux (y :: ys)
+  in aux txt
+
+
+let handle_new_key typing_data key =
+  if String.equal key "Backspace" then 
+    { typing_data with text = handle_backspace typing_data.text }
+  else 
+    if String.length key <> 1 then typing_data
+    else
+      let ch = key.[0] in
+      let ci = List.find (fun ci -> ci.is_next) typing_data.text in
+      let errors =
+        if ci.ch = ch then typing_data.errors else typing_data.errors + 1 in 
+      { text = (handle_ch typing_data.text ch); errors }
 
 let text_done txt =
   List.length (List.filter (fun ci -> ci.is_correct = false) txt) = 0

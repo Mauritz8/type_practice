@@ -70,7 +70,7 @@ let%test_unit "handle_new_ch_correct" =
       errors = 0;
     }
   in
-  let actual = handle_new_ch typing_data 's' in
+  let actual = handle_new_key typing_data "s" in
   let is_eq = typing_data_equal expect actual in
   if not is_eq then print_text_diff expect actual;
   assert is_eq
@@ -98,7 +98,7 @@ let%test_unit "handle_new_ch_wrong" =
       errors = 1;
     }
   in
-  let actual = handle_new_ch typing_data 'h' in
+  let actual = handle_new_key typing_data "h" in
   let is_eq = typing_data_equal expect actual in
   if not is_eq then print_text_diff expect actual;
   assert is_eq

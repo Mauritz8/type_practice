@@ -6,7 +6,7 @@ open Char_info
 open Dream_html
 open HTML
 
-type input_data = { typing_data: typing_data; ch: char } [@@deriving yojson]
+type input_data = { typing_data: typing_data; key: string } [@@deriving yojson]
 
 let char_info_span (ci : char_info) = 
     span 
@@ -41,7 +41,7 @@ let () =
         |> Yojson.Safe.from_string
         |> input_data_of_yojson
       in
-      let new_typing_data = handle_new_ch data.typing_data data.ch in
+      let new_typing_data = handle_new_key data.typing_data data.key in
       let html = if text_done new_typing_data.text then 
         typing_report (report new_typing_data) else text new_typing_data in
       Dream_html.respond html);
