@@ -7,6 +7,7 @@ val str : string
 val init_typing_data : string -> typing_data
 val handle_new_key : typing_data -> string -> typing_data
 val text_done : Char_info.char_info list -> bool
+val text_done_without_errors : Char_info.char_info list -> bool
 val report : typing_data -> report
 val wpm : Char_info.char_info list -> float -> float
 val typing_data_equal : typing_data -> typing_data -> bool

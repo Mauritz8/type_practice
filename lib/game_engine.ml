@@ -49,8 +49,14 @@ let handle_new_key typing_data key =
         if ci.ch = ch then typing_data.errors else typing_data.errors + 1 in 
       { text = (handle_ch typing_data.text ch); errors }
 
-let text_done txt =
-  List.length (List.filter (fun ci -> ci.state = Wrong || ci.state = Default) txt) = 0
+let rec text_done = function
+  | [] -> true
+  | ci :: txt -> if ci.is_next then false else text_done txt
+
+let rec text_done_without_errors = function
+  | [] -> true
+  | ci :: txt -> if ci.state = Default || ci.state = Wrong then false 
+               else text_done_without_errors txt
 
 let n_words txt = List.length (List.filter (fun ci -> ci.ch = ' ') txt) + 1
 
