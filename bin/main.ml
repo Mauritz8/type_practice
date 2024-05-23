@@ -45,6 +45,8 @@ let typing_report report =
         p [class_ "value"] [txt "-"];
       ];
     ];
+    button [id "report-continue-practice-btn"; Hx.get "/api/new_text";
+    Hx.target "body"] [txt "Continue practicing"];
   ]
 
 let () = 

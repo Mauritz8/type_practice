@@ -21,5 +21,6 @@ window.addEventListener("keydown", e => {
   }).then(res => res.text())
     .then(text => {
       container.outerHTML = text;
+      htmx.process(document.body);
     });
 });

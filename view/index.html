@@ -10,9 +10,8 @@
 </head>
 
 <body>
-  <div id='container'></div>
   <div id='start-btn-container'>
-    <button id='start-btn' hx-get="/api/new_text" hx-target="#container">Start practicing</button>
+    <button id='start-btn' hx-get="/api/new_text" hx-target="#start-btn-container" hx-swap="outerHTML">Start practicing</button>
   </div>
 </body>
 

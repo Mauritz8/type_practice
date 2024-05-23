@@ -76,5 +76,18 @@ body {
   font-size: 30px;
   font-weight: bold;
   margin-top: 10px;
-  margin-bottom: 0;
+}
+
+#report-continue-practice-btn {
+  background-color: #10b981;
+  color: white;
+  font-size: 30px;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+#report-continue-practice-btn:hover {
+  background-color: #0f8f70;
 }
