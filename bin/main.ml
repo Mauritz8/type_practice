@@ -16,7 +16,7 @@ let char_info_span (ci : char_info) =
         | Correct -> class_ "ch correct";
         | Wrong -> class_ "ch wrong";
       ]
-      [txt "%s" (Utils.ch_to_str ci.ch)]
+      [txt "%c" ci.ch]
 
 let text (tp : typing_data) =
   div [id "text-box"] [
