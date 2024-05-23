@@ -1,3 +1,4 @@
+let handler = Promise.resolve();
 window.addEventListener("keydown", e => {
   if (e.key == ' ') e.preventDefault();
 
@@ -13,7 +14,7 @@ window.addEventListener("keydown", e => {
   });
   const errors = parseInt(container.querySelector("#errors").value);
 
-  fetch("/api/new_input", {
+  handler = fetch("/api/new_input", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ typing_data: { text: text, errors: errors}, key: e.key }),
