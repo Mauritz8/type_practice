@@ -47,7 +47,7 @@ let%test_unit "init_typing_data_sentence" =
   if not is_eq then print_text_diff expect actual;
   assert is_eq
 
-let%test_unit "handle_new_ch_correct" =
+let%test_unit "handle_new_key_correct" =
   let typing_data =
     {
       text =
@@ -75,7 +75,7 @@ let%test_unit "handle_new_ch_correct" =
   if not is_eq then print_text_diff expect actual;
   assert is_eq
 
-let%test_unit "handle_new_ch_wrong" =
+let%test_unit "handle_new_key_wrong" =
   let typing_data =
     {
       text =
