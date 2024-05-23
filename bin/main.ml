@@ -27,7 +27,7 @@ let text (tp : typing_data) =
 let typing_report report = 
   div [id "report"] [
     p [] [txt "Excellent"];
-    p [] [txt "You typed %d words with %d accuracy" report.words report.accuracy_percent];
+    p [] [txt "You typed %d words with %d%% accuracy" report.words report.accuracy_percent];
   ]
 
 let () = 
