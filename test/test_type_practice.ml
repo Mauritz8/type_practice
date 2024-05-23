@@ -102,3 +102,59 @@ let%test_unit "handle_new_key_wrong" =
   let is_eq = typing_data_equal expect actual in
   if not is_eq then print_text_diff expect actual;
   assert is_eq
+
+let%test_unit "handle_new_key_last_char_wrong" =
+  let typing_data =
+    {
+      text =
+        [
+          { ch = 's'; state = Correct; is_next = false };
+          { ch = 't'; state = Correct; is_next = false };
+          { ch = 'r'; state = Default; is_next = true };
+        ];
+      errors = 0;
+    }
+  in
+  let expect =
+    {
+      text =
+        [
+          { ch = 's'; state = Correct; is_next = false };
+          { ch = 't'; state = Correct; is_next = false };
+          { ch = 'r'; state = Wrong; is_next = true };
+        ];
+      errors = 1;
+    }
+  in
+  let actual = handle_new_key typing_data "z" in
+  let is_eq = typing_data_equal expect actual in
+  if not is_eq then print_text_diff expect actual;
+  assert is_eq
+
+let%test_unit "handle_new_key_last_char_correct_with_previous_wrong" =
+  let typing_data =
+    {
+      text =
+        [
+          { ch = 's'; state = Correct; is_next = false };
+          { ch = 't'; state = Wrong; is_next = false };
+          { ch = 'r'; state = Default; is_next = true };
+        ];
+      errors = 0;
+    }
+  in
+  let expect =
+    {
+      text =
+        [
+          { ch = 's'; state = Correct; is_next = false };
+          { ch = 't'; state = Wrong; is_next = false };
+          { ch = 'r'; state = Correct; is_next = false };
+        ];
+      errors = 0;
+    }
+  in
+  let actual = handle_new_key typing_data "r" in
+  let is_eq = typing_data_equal expect actual in
+  if not is_eq then print_text_diff expect actual;
+  assert is_eq

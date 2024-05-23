@@ -75,9 +75,9 @@ let typing_data_equal x y =
 let typing_data_format x =
   let chs = List.map format_char_info x.text in
   let chs_str = String.concat ", \n" chs in
-  Printf.sprintf "[\n%s\n]\n, errors = %d" chs_str x.errors
+  Printf.sprintf "{[\n%s\n]\n, errors = %d}" chs_str x.errors
 
 let print_text_diff expected actual =
-  Printf.printf "Test failed!\nExpected %s\nActual %s"
+  Printf.printf "Test failed!\nExpected %s\nActual %s\n"
     (typing_data_format expected)
     (typing_data_format actual)
