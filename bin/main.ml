@@ -26,8 +26,25 @@ let text (tp : typing_data) =
 
 let typing_report report = 
   div [id "report"] [
-    p [] [txt "Excellent"];
-    p [] [txt "You typed %d words with %d%% accuracy" report.words report.accuracy_percent];
+    p [id "report-title"] [txt "Summary"];
+    div [id "report-stats"] [
+      div [] [
+        p [class_ "label"] [txt "Words"];
+        p [class_ "value"] [txt "%d" report.words];
+      ];
+      div [] [
+        p [class_ "label"] [txt "Mistakes"];
+        p [class_ "value"] [txt "%d" report.errors];
+      ];
+      div [] [
+        p [class_ "label"] [txt "Accuracy"];
+        p [class_ "value"] [txt "%d%%" report.accuracy_percent];
+      ];
+      div [] [
+        p [class_ "label"] [txt "WPM"];
+        p [class_ "value"] [txt "-"];
+      ];
+    ];
   ]
 
 let () = 
