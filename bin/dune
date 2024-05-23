@@ -1,6 +1,6 @@
 (executable
  (public_name type_practice)
- (name main)
+ (name server)
  (libraries type_practice dream dream-html)
  (preprocess
   (pps lwt_ppx ppx_yojson_conv)))
