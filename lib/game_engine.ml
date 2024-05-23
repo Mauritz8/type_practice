@@ -54,15 +54,16 @@ let text_done txt =
 
 let n_words txt = List.length (List.filter (fun ci -> ci.ch = ' ') txt) + 1
 
+let accuracy typing_data =
+  let len = List.length typing_data.text in
+  float_of_int (len - typing_data.errors) /. float_of_int len
+
 let report typing_data =
-  let correct = List.length typing_data.text in
-  let total =  correct + typing_data.errors in
-  let accuracy = float_of_int correct /. float_of_int total in
-  let accuracy_percent = int_of_float (Float.round (accuracy *. 100.0)) in
-  {
+  let accuracy_percent = accuracy typing_data *. 100.0
+  in {
     words = n_words typing_data.text;
     errors = typing_data.errors;
-    accuracy_percent;
+    accuracy_percent = int_of_float (Float.round accuracy_percent);
   }
 
 let wpm txt sec =
