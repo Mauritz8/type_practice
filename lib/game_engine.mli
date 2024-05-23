@@ -1,7 +1,7 @@
 type typing_data = { text : Char_info.char_info list; errors : int }
 [@@deriving yojson]
 
-type report = { words : int; errors : int; accuracy_percent : int }
+type report = { chars: int; words : int; errors : int; accuracy_percent : int }
 
 val str : string
 val init_typing_data : string -> typing_data

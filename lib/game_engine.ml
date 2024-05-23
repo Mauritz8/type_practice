@@ -2,7 +2,7 @@ open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 open Char_info
 
 type typing_data = { text : char_info list; errors : int } [@@deriving yojson]
-type report = { words : int; errors : int; accuracy_percent : int }
+type report = { chars: int; words : int; errors : int; accuracy_percent : int }
 
 let str = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
 
@@ -67,6 +67,7 @@ let accuracy typing_data =
 let report typing_data =
   let accuracy_percent = accuracy typing_data *. 100.0
   in {
+    chars = List.length typing_data.text;
     words = n_words typing_data.text;
     errors = typing_data.errors;
     accuracy_percent = int_of_float (Float.round accuracy_percent);

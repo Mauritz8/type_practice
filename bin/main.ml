@@ -29,8 +29,8 @@ let typing_report report =
     p [id "report-title"] [txt "Summary"];
     div [id "report-stats"] [
       div [] [
-        p [class_ "label"] [txt "Words"];
-        p [class_ "value"] [txt "%d" report.words];
+        p [class_ "label"] [txt "Characters"];
+        p [class_ "value"] [txt "%d" report.chars];
       ];
       div [] [
         p [class_ "label"] [txt "Mistakes"];
@@ -39,6 +39,14 @@ let typing_report report =
       div [] [
         p [class_ "label"] [txt "Accuracy"];
         p [class_ "value"] [txt "%d%%" report.accuracy_percent];
+      ];
+      div [] [
+        p [class_ "label"] [txt "Words"];
+        p [class_ "value"] [txt "%d" report.words];
+      ];
+      div [] [
+        p [class_ "label"] [txt "Time"];
+        p [class_ "value"] [txt "- sec"];
       ];
       div [] [
         p [class_ "label"] [txt "WPM"];
