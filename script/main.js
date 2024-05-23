@@ -1,7 +1,7 @@
 window.addEventListener("keydown", e => {
   if (e.key == ' ') e.preventDefault();
 
-  const container = document.getElementById("str");
+  const container = document.getElementById("text-box");
   const elems = Array.from(container.getElementsByClassName("ch"));
   const text = elems.map(elem => {
     const ch = elem.innerHTML === "&nbsp;" ? " " : elem.innerHTML;

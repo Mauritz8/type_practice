@@ -19,7 +19,7 @@ let char_info_span (ci : char_info) =
       [txt "%s" (Utils.ch_to_str ci.ch)]
 
 let text (tp : typing_data) =
-  div [id "str"] [
+  div [id "text-box"] [
     input [id "errors"; type_ "hidden"; value "%d" tp.errors];
     div [] (List.map char_info_span tp.text)
   ]

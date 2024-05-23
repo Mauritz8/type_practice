@@ -1,40 +1,39 @@
 body {
-  text-align: center;
+  background-color: #f5f5f5;
+  color: #333333;
+  margin: 40px 200px;
 }
 
-h1 {
-  text-align: center;
-  font-size: 35px;
+#start-btn-container {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
 #start-btn {
-  border: none;
+  font-size: 60px;
+  font-weight: bold;
+  padding: 32px 64px;
+  background-color: #10b981;
   color: white;
-  padding: 16px 32px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  transition-duration: 0.4s;
   cursor: pointer;
-  background-color: white;
-  color: black;
-  border: 2px solid #04AA6D;
+  border: none;
+  border-radius: 10px;
 }
 
 #start-btn:hover {
-  background-color: #04AA6D;
-  color: white;
+  background-color: #0f8f70;
 }
 
-#str {
+#text-box {
   font-size: 0;
-  margin: 20px;
 }
 
 .ch {
-  font-size: 25px; 
+  font-size: 40px; 
 }
 
 #next {
@@ -42,7 +41,7 @@ h1 {
 }
 
 .correct {
-  color: green;
+  color: #10b981;
 }
 
 .wrong {
