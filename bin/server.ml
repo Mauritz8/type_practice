@@ -71,7 +71,7 @@ let () =
   @@ Dream.memory_sessions
   @@ Dream.router [
     Dream.get "/api/new_text" (fun _ ->
-      Dream_html.respond (text (init_typing_data str)));
+      Dream_html.respond (text (init_typing_data (Text_gen.gen_text ()))));
 
     Dream.post "/api/new_input" (fun request ->
       let%lwt body = Dream.body request in

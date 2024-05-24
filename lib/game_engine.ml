@@ -5,8 +5,6 @@ type typing_data = { text : char_info list; errors : int; start_time : float opt
 [@@deriving yojson]
 type report = { chars: int; words : int; errors : int; accuracy_percent : int; sec : int; }
 
-let str = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-
 let init_typing_data str =
   let first = { ch = String.get str 0; state = Default; is_next = true } in
   let elem i = { ch = String.get str i; state = Default; is_next = false } in
