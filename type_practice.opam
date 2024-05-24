@@ -12,6 +12,12 @@ bug-reports: "https://github.com/username/reponame/issues"
 depends: [
   "ocaml"
   "dune" {>= "3.15"}
+  "dream"
+  "dream-html"
+  "lwt_ppx"
+  "ppx_yojson_conv"
+  "ppx_inline_test"
+  "ppx_assert"
   "odoc" {with-doc}
 ]
 build: [

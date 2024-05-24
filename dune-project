@@ -19,7 +19,7 @@
  (name type_practice)
  (synopsis "A short synopsis")
  (description "A longer description")
- (depends ocaml dune)
+ (depends ocaml dune dream dream-html lwt_ppx ppx_yojson_conv ppx_inline_test ppx_assert)
  (tags
   (topics "to describe" your project)))
 
