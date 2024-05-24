@@ -32,29 +32,33 @@ let typing_report report =
   div [id "report"] [
     p [id "report-title"] [txt "Summary"];
     div [id "report-stats"] [
-      div [] [
-        p [class_ "label"] [txt "Characters"];
-        p [class_ "value"] [txt "%d" report.chars];
+      div [class_ "row"] [
+        div [] [
+          p [class_ "label"] [txt "Characters"];
+          p [class_ "value"] [txt "%d" report.chars];
+        ];
+        div [] [
+          p [class_ "label"] [txt "Mistakes"];
+          p [class_ "value"] [txt "%d" report.errors];
+        ];
+        div [] [
+          p [class_ "label"] [txt "Accuracy"];
+          p [class_ "value"] [txt "%d%%" report.accuracy_percent];
+        ];
       ];
-      div [] [
-        p [class_ "label"] [txt "Mistakes"];
-        p [class_ "value"] [txt "%d" report.errors];
-      ];
-      div [] [
-        p [class_ "label"] [txt "Accuracy"];
-        p [class_ "value"] [txt "%d%%" report.accuracy_percent];
-      ];
-      div [] [
-        p [class_ "label"] [txt "Words"];
-        p [class_ "value"] [txt "%d" report.words];
-      ];
-      div [] [
-        p [class_ "label"] [txt "Time"];
-        p [class_ "value"] [txt "%d sec" report.sec];
-      ];
-      div [] [
-        p [class_ "label"] [txt "WPM"];
-        p [class_ "value"] [txt "%d" (wpm report.words report.sec)];
+      div [class_ "row"] [
+        div [] [
+          p [class_ "label"] [txt "Words"];
+          p [class_ "value"] [txt "%d" report.words];
+        ];
+        div [] [
+          p [class_ "label"] [txt "Time"];
+          p [class_ "value"] [txt "%d sec" report.sec];
+          ];
+        div [] [
+          p [class_ "label"] [txt "WPM"];
+          p [class_ "value"] [txt "%d" (wpm report.words report.sec)];
+          ];
       ];
     ];
     button [id "report-continue-practice-btn"; Hx.get "/api/new_text";
