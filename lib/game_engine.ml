@@ -1,8 +1,9 @@
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 open Char_info
 
-type typing_data = { text : char_info list; errors : int } [@@deriving yojson]
-type report = { chars: int; words : int; errors : int; accuracy_percent : int }
+type typing_data = { text : char_info list; errors : int; start_time : float option}
+[@@deriving yojson]
+type report = { chars: int; words : int; errors : int; accuracy_percent : int; sec : int; }
 
 let str = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
 
@@ -10,7 +11,7 @@ let init_typing_data str =
   let first = { ch = String.get str 0; state = Default; is_next = true } in
   let elem i = { ch = String.get str i; state = Default; is_next = false } in
   let range = List.init (String.length str - 1) (fun x -> x + 1) in
-  { text = first :: List.map elem range; errors = 0 }
+  { text = first :: List.map elem range; errors = 0; start_time = None;}
 
 let rec handle_backspace = function
   | [] -> []
@@ -47,7 +48,9 @@ let handle_new_key typing_data key =
       let ci = List.find (fun ci -> ci.is_next) typing_data.text in
       let errors =
         if ci.ch = ch then typing_data.errors else typing_data.errors + 1 in 
-      { text = (handle_ch typing_data.text ch); errors }
+      let start_time = if typing_data.start_time = None then Some (Unix.time ())
+                       else typing_data.start_time in
+      { text = (handle_ch typing_data.text ch); errors; start_time; }
 
 let rec text_done = function
   | [] -> true
@@ -71,11 +74,14 @@ let report typing_data =
     words = n_words typing_data.text;
     errors = typing_data.errors;
     accuracy_percent = int_of_float (Float.round accuracy_percent);
+    sec = match typing_data.start_time with
+          | None -> failwith "no start time"
+          | Some start -> int_of_float (Unix.time () -. start)
   }
 
-let wpm txt sec =
-  let min = sec /. 60.0 in
-  float_of_int (n_words txt) /. min
+let wpm words sec =
+  let min = (float_of_int sec) /. 60.0 in
+  int_of_float (Float.round ((float_of_int words) /. min))
 
 let typing_data_equal x y =
   List.equal equal_char_info x.text y.text && x.errors = y.errors

@@ -12,6 +12,7 @@ let%test_unit "init_typing_data_word" =
           { ch = 'r'; state = Default; is_next = false };
         ];
       errors = 0;
+      start_time = None;
     }
   in
   let actual = init_typing_data "str" in
@@ -40,6 +41,7 @@ let%test_unit "init_typing_data_sentence" =
           { ch = 't'; state = Default; is_next = false };
         ];
       errors = 0;
+      start_time = None;
     }
   in
   let actual = init_typing_data "this is a test" in
@@ -57,6 +59,7 @@ let%test_unit "handle_new_key_correct" =
           { ch = 'r'; state = Default; is_next = false };
         ];
       errors = 0;
+      start_time = Some 0.0;
     }
   in
   let expect =
@@ -68,6 +71,7 @@ let%test_unit "handle_new_key_correct" =
           { ch = 'r'; state = Default; is_next = false };
         ];
       errors = 0;
+      start_time = Some 0.0;
     }
   in
   let actual = handle_new_key typing_data "s" in
@@ -85,6 +89,7 @@ let%test_unit "handle_new_key_wrong" =
           { ch = 'r'; state = Default; is_next = false };
         ];
       errors = 0;
+      start_time = Some 0.0;
     }
   in
   let expect =
@@ -96,6 +101,7 @@ let%test_unit "handle_new_key_wrong" =
           { ch = 'r'; state = Default; is_next = false };
         ];
       errors = 1;
+      start_time = Some 0.0;
     }
   in
   let actual = handle_new_key typing_data "h" in
@@ -113,6 +119,7 @@ let%test_unit "handle_new_key_last_char_wrong" =
           { ch = 'r'; state = Default; is_next = true };
         ];
       errors = 0;
+      start_time = Some 0.0;
     }
   in
   let expect =
@@ -124,6 +131,7 @@ let%test_unit "handle_new_key_last_char_wrong" =
           { ch = 'r'; state = Wrong; is_next = true };
         ];
       errors = 1;
+      start_time = Some 0.0;
     }
   in
   let actual = handle_new_key typing_data "z" in
@@ -141,6 +149,7 @@ let%test_unit "handle_new_key_last_char_correct_with_previous_wrong" =
           { ch = 'r'; state = Default; is_next = true };
         ];
       errors = 0;
+      start_time = Some 0.0;
     }
   in
   let expect =
@@ -152,6 +161,7 @@ let%test_unit "handle_new_key_last_char_correct_with_previous_wrong" =
           { ch = 'r'; state = Correct; is_next = false };
         ];
       errors = 0;
+      start_time = Some 0.0;
     }
   in
   let actual = handle_new_key typing_data "r" in

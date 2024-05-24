@@ -21,6 +21,10 @@ let char_info_span (ci : char_info) =
 let text (tp : typing_data) =
   div [id "text-box"] [
     input [id "errors"; type_ "hidden"; value "%d" tp.errors];
+    input [id "start_time"; type_ "hidden";
+        match tp.start_time with
+        | None -> value ""
+        | Some v -> value "%f" v];
     div [] (List.map char_info_span tp.text)
   ]
 
@@ -46,11 +50,11 @@ let typing_report report =
       ];
       div [] [
         p [class_ "label"] [txt "Time"];
-        p [class_ "value"] [txt "- sec"];
+        p [class_ "value"] [txt "%d sec" report.sec];
       ];
       div [] [
         p [class_ "label"] [txt "WPM"];
-        p [class_ "value"] [txt "-"];
+        p [class_ "value"] [txt "%d" (wpm report.words report.sec)];
       ];
     ];
     button [id "report-continue-practice-btn"; Hx.get "/api/new_text";
