@@ -21,16 +21,18 @@ let rec handle_backspace = function
       else x :: handle_backspace (y :: ys)
 
 let handle_ch txt ch =
+  let prev_incorrect = List.exists (fun ci -> ci.state = Wrong) txt in
+  let incorrect_ch x = x <> ch || prev_incorrect in
   let rec aux = function
     | [] -> []
     | [ x ] -> [{ x with 
-          state = if x.ch = ch then Correct else Wrong;
-          is_next = if x.ch = ch then false else true
+          state = if incorrect_ch x.ch then Wrong else Correct;
+          is_next = if incorrect_ch x.ch then true else false
         }] 
     | x :: y :: ys ->
         if x.is_next then
           { x with 
-            state = if x.ch = ch then Correct else Wrong;
+            state = if incorrect_ch x.ch then Wrong else Correct;
             is_next = false } :: { y with is_next = true } :: ys
         else x :: aux (y :: ys)
   in aux txt

@@ -81,7 +81,7 @@ let () =
         |> input_data_of_yojson
       in
       let new_typing_data = handle_new_key data.typing_data data.key in
-      let html = if text_done new_typing_data.text then 
+      let html = if text_done_without_errors new_typing_data.text then 
         typing_report (report new_typing_data) else text new_typing_data in
       Dream_html.respond html);
 

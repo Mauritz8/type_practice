@@ -158,7 +158,7 @@ let%test_unit "handle_new_key_last_char_correct_with_previous_wrong" =
         [
           { ch = 's'; state = Correct; is_next = false };
           { ch = 't'; state = Wrong; is_next = false };
-          { ch = 'r'; state = Correct; is_next = false };
+          { ch = 'r'; state = Wrong; is_next = true };
         ];
       errors = 0;
       start_time = Some 0.0;
